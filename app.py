@@ -366,8 +366,11 @@ def generate_sample_excel(month: str, year: int = 2026) -> bytes:
     """Generate a synthetic WIC KPI Excel workbook for demo purposes."""
     import random
 
-    random.seed(MONTH_ORDER.index(month))
-    base = 100 + MONTH_ORDER.index(month) * 5
+    if month not in MONTH_ORDER:
+        raise ValueError(f"Unknown month '{month}'. Must be one of: {MONTH_ORDER}")
+    month_idx = MONTH_ORDER.index(month)
+    random.seed(month_idx)
+    base = 100 + month_idx * 5
 
     summary_data = {
         "Program": ["WIC", "Nutrition Counseling", "Breastfeeding Support", "Referrals"],

@@ -38,6 +38,7 @@ Dependencies (not included in requirements.txt by default)
 
 from __future__ import annotations
 
+import fnmatch
 import io
 import json
 import os
@@ -140,7 +141,6 @@ def list_monthly_files() -> list[dict[str, str]]:
     )
     files = result.get("files", [])
     if FILE_PATTERN != ".xlsx":
-        import fnmatch
         files = [f for f in files if fnmatch.fnmatch(f["name"], FILE_PATTERN)]
     return files
 

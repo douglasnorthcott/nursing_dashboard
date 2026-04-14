@@ -109,8 +109,10 @@ load_excel_file <- function(path, filename = basename(path)) {
 #' Generate a synthetic WIC KPI workbook for a given month.
 #' Returns a temp file path to the .xlsx file.
 generate_demo_xlsx <- function(month) {
-  set.seed(which(MONTH_ORDER == month))
-  base_n <- 100 + which(MONTH_ORDER == month) * 5
+  month_idx <- which(MONTH_ORDER == month)
+  if (length(month_idx) == 0) stop(paste0("Unknown month: '", month, "'"))
+  set.seed(month_idx)
+  base_n <- 100 + month_idx * 5
 
   rand <- function(n, lo, hi) round(runif(n, lo, hi))
 

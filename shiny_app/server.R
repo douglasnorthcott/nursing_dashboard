@@ -102,7 +102,7 @@ function(input, output, session) {
     if (nrow(df) == 0) return(character(0))
     candidates <- setdiff(names(df)[vapply(df, is.numeric, logical(1))], "Rows")
     # Keep only columns that have at least one non-NA value for this sheet
-    candidates[vapply(candidates, function(c) any(!is.na(df[[c]])), logical(1))]
+    candidates[vapply(candidates, function(col_name) any(!is.na(df[[col_name]])), logical(1))]
   })
 
   # ── 3. Sidebar UI outputs ─────────────────────────────────────
@@ -182,7 +182,7 @@ function(input, output, session) {
     prev   <- if (nrow(df) >= 2) df[nrow(df) - 1, , drop = FALSE] else NULL
 
     # Only show columns that have at least one non-NA value for this sheet
-    cols <- cols[vapply(cols, function(c) any(!is.na(df[[c]])), logical(1))]
+    cols <- cols[vapply(cols, function(col_name) any(!is.na(df[[col_name]])), logical(1))]
     if (length(cols) == 0) return(NULL)
 
     box_list <- lapply(head(cols, 8), function(col) {
